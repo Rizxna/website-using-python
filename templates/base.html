@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Quest To Empower" content="Welcome to Quest To Empower where your dreams are met with reality"/>
+    <!-- Add any other meta tags you need for SEO or social media sharing -->
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous"/>
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButton = document.getElementById('edit-button');
+            const editForm = document.getElementById('edit-form');
+    
+            editButton.addEventListener('click', function() {
+                editForm.style.display = 'block';
+            });
+        });
+    </script>
+          <!-- JavaScript dependencies -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+          <script
+          src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"
+        ></script>
+
+    <!-- Additional styles and scripts -->
+    <style>
+        body {
+            background-color: #6D9773;
+            color: #0C3B2E;
+        }
+        
+        /* Add the logo to the navbar */
+        .navbar-brand {
+            width: 50px;
+            height: 50pxpx;
+            margin-left: 5px;
+            margin-top: 5px;
+            float: left;
+        }
+
+        /* Add the login/logout, signup, and analytics links to the navbar */
+        .navbar-nav {
+            float: right;
+        }
+        .navbar-nav li {
+            margin-left: 10px;
+        }
+        .navbar-nav a {
+            color: #fff;
+        }
+        .navbar-nav a:hover {
+            color: #0C3B2E;
+        }
+    </style>
+
+    <!-- Add Google Analytics or other tracking codes here if needed -->
+
+    <!-- Additional meta tags for SEO and social media sharing -->
+    <meta name="keywords" content="crowdfunding, keywords, games, books, projects, moneyfunding, backers, home">
+    <meta property="og:title" content="Quest to Empower">
+    <meta property="og:description" content="Welcome to Quest To Empower where your dreams are met with reality">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-QTE.png') }}">
+    <meta property="og:site_name" content="Quest To Empower"/>
+    <meta property="og:type" content="website"/>
+</head>
+<body>
+   <!-- Common header content -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+           
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="width: 80px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/livestreams">Live Streams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/analytics">Analytics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/support">Support</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">signup</a>
+                </li>
+            </ul>
+             <form class = "form-inline my-2 my-lg-O ml-2">
+                <input class="form-control mr-sm-2" type="search" placeholder="Discover a project..." aria-label="search">
+                <button class="btn btn-outline-success my-2 my-sm-O" type="submit">Search </button>
+                
+            </form>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">
+                    <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                </a>
+            </li>
+        </div>
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible my-4" role="alert">
+      {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+    <!-- Main content section -->
+    <div class="container">
+        {% block content %}
+
+    <div class="edit-profile">
+        <button id="edit-button">Edit Profile</button>
+        <form id="edit-form" action="{{ url_for('edit_profile') }}" method="POST">
+            <label for="new_first_name">New First Name:</label>
+            <input type="text" id="new_first_name" name="new_first_name">
+
+            <label for="new_last_name">New Last Name:</label>
+            <input type="text" id="new_last_name" name="new_last_name">
+
+            <label for="new_bio">New Bio:</label>
+            <textarea id="new_bio" name="new_bio"></textarea>
+
+            <label for="new_email">New Email:</label>
+            <input type="email" id="new_email" name="new_email">
+
+            <label for="new_password">New Password:</label>
+            <input type="password" id="new_password" name="new_password">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</section>
+
+        <!-- Content from child templates will be inserted here -->
+        {% endblock %}
+    </div>
+
+    <!-- Common footer content -->
+    <footer>
+       <!-- Footer -->
+<section id="footer">
+    <div class="container">
+        <div class="row text-center text-xs-center text-sm-left text-md-left">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled quick-links">
+                    <li><a href="/"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                    <li><a href="/support"><i class="fa fa-angle-double-right"></i>Support</a></li>
+                    <li><a href="/livestreams"><i class="fa fa-angle-double-right"></i>Video Updates</a></li>
+                    <li><a href="/marketplace"><i class="fa fa-angle-double-right"></i>Products</a></li>
+                   
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <h5>Social</h5>
+                <ul class="list-unstyled quick-links">
+                    <li><a href="https://www.facebook.com/"><i class="fa fa-angle-double-right"></i>Facebook</a></li>
+                    <li><a href="https://www.youtube.com/"><i class="fa fa-angle-double-right"></i>Youtube</a></li>
+                    <li><a href="https://www.twitter.com/"><i class="fa fa-angle-double-right"></i>Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/"><i class="fa fa-angle-double-right"></i>LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <h5>Who We Are</h5>
+                <ul class="list-unstyled quick-links">
+                    <li><a href="/about"><i class="fa fa-angle-double-right"></i>About</a></li>
+                    <li><a href="/support"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                    <li><a href="https://www.facebook.com/"><i class="fa fa-angle-double-right"></i>Developed by Rizwana</a></li>
+                    <li><a href="/developer"><i class="fa fa-angle-double-right"></i>Developer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                <p class="h6"><a class="text-green ml-2" href="https://www.youtube.com/" target="">QUEST TO EMPOWER</a> &copy All
+                    right Reversed.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        
+        </div>
+    </footer>
+</body>
+</html>
+
