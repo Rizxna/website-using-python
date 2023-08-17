@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}profile{% endblock %} {% block content%}
+
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}" />
+</head>
+<body class="background-color">
+<div class="header">
+   
+    {% if not loggedIn %}
+    <div class="sign-in-button">
+        <a class="link" href="/loginForm">Sign In</a>
+    </div>
+    {% else %}
+    <div class="dropdown">
+        <button class="dropbtn">Hello, <br>{{ firstName }}</button>
+        <div class="dropdown-content">
+            <a href="/account/orders">Your orders</a>
+            <a href="/account/profile">Your profile</a>
+            <hr>
+            <a href="/logout">Sign Out</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="kart">
+        <a class="link" href="/cart">
+            <img class="cart-icon" src="{{ url_for('static', filename='images/shoppingCart.png') }}"  />
+            CART {{ noOfItems }}
+        </a>
+    </div>
+</div>
+
+<div class="profile-section">
+    <div class="user-profile">
+        <img src="{{ user.image }}" alt="User Profile Image" />
+    </div>
+    <div class="user-info">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <p>{{ user.bio }}</p>
+    </div>
+    <div class="account-section">
+        <h2 class="underlined">Account</h2>
+        <p>Email: {{ user.email }}</p>
+        <p>Address: {{ user.address }}</p>
+        <!-- Add more account information here -->
+    </div>
+    <div class="projects-section">
+        <h2 class="underlined">Projects</h2>
+        <h3>Backed Projects</h3>
+        <ul>
+            {% for project in user.backed_projects %}
+            <li>{{ project.title }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Created Projects</h3>
+        <ul>
+            {% for project in user.created_projects %}
+            <li>{{ project.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="edit-button">
+        <a href="/profileedit">Edit Profile</a>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}
