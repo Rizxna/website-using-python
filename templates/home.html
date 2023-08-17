@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="main-content">
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.png') }}" alt="Banner Image"
+            style="width: 100%; max-width: 1200px; height: 500px;">
+    </div>
+    <div class="project-sections">
+        <div class="recommended-projects">
+            <h2 class="section-title">Recommended Projects</h2>
+            {% for project in recommended_projects %}
+            <div class="project">
+                <a href="{{ url_for('project_details', project_id=project.id) }}">
+                    <h3>{{ project.title }}</h3>
+                </a>
+                <img src="{{ url_for('static', filename='images/' + project.image) }}" alt="{{ project.image }}"
+                    style="max-width: 990px; height:300px;">
+                <p>{{ project.description }}</p>
+                <div class="project-actions">
+                    <a href="{{ url_for('like_project', project_id=project.id) }}"><i class="fas fa-thumbs-up"></i>
+                        Like</a>
+                    <a href="{{ url_for('bookmark_project', project_id=project.id) }}"><i class="fas fa-bookmark"></i>
+                        Bookmark</a>
+                    <a href="{{ url_for('project_details', project_id=project.id) }}"><i
+                            class="fas fa-external-link-alt"></i> Fund Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="featured-projects">
+            <h2 class="section-title">Featured Projects</h2>
+            {% for project in featured_projects %}
+            <div class="project">
+                <a href="{{ url_for('project_details', project_id=project.id) }}">
+                    <h3>{{ project.title }}</h3>
+                </a>
+                <img src="{{ url_for('static', filename='images/' + project.image) }}" alt="{{ project.image }}"
+                    style="max-width: 200px;">
+                <p>{{ project.description }}</p>
+                <div class="project-actions">
+                    <a href="{{ url_for('like_project', project_id=project.id) }}"><i class="fas fa-thumbs-up"></i> Like</a>
+                    <a href="{{ url_for('bookmark_project', project_id=project.id) }}"><i class="fas fa-bookmark"></i>
+                        Bookmark</a>
+                    <a href="{{ url_for('project_details', project_id=project.id) }}"><i
+                            class="fas fa-external-link-alt"></i> Fund Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <style>
+        .section-title {
+            text-decoration: underline; /* Add underline style to section titles */
+        }
+    </style>
+    
+    <div class="marketplace-banner">
+        <a href="{{ url_for('marketplace') }}">
+            <img src="{{ url_for('static', filename='images/marketplace_banner.jpg') }}" alt="Marketplace Banner"
+                style="width: 100%; max-width: 1200px;">
+        </a>
+    </div>
+
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner-image.jpg') }}" alt="Banner Image" class="banner-image">
+        <div class="banner-text">
+            <h2>Create Your Own Campaign</h2>
+            <p>Support innovative ideas and make a difference in the world.</p>
+            <a href="/createproject" class="btn btn-primary">Create Now</a>
+        </div>
+    </div>
+
+
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner-image.jpg') }}" alt="Banner Image" class="banner-image">
+        <div class="banner-text">
+            <h2>LIVE STREAMS </h2>
+            <p>Support innovative ideas and make a difference in the world.</p>
+            <a href="/livestreams" class="btn btn-primary">Watch Now</a>
+        </div>
+    </div>
+   
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner-image.jpg') }}" alt="Banner Image" class="banner-image">
+        <div class="banner-text">
+            <h2>Discover New Projects</h2>
+            <p>Support innovative ideas and make a difference in the world.</p>
+            <a href="/allprojects" class="btn btn-primary">Explore Projects</a>
+        </div>
+    </div>
+    
+</section>
+
+{% endblock %}
