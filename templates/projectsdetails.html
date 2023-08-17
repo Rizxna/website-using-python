@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {%block title %}projects {% endblock %}  {% block content %}
+
+
+    <section class="project-details">
+        <div class="project-header">
+            <h1>{{ project.title }}</h1>
+            <img src="{{ url_for('static', filename=project.image) }}" alt="Project Image" style="width: 100%; max-width: 500px;">
+        </div>
+
+        <div class="project-description">
+            <p>{{ project.description }}</p>
+        </div>
+
+        <div class="project-funding">
+            <div class="funding-progress">
+                <p>Funding Progress: {{ project.funds_raised }} raised</p>
+                <!-- Display the progress bar here -->
+            </div>
+            <p>Start Date: {{ project.start_date }}</p>
+            <p>End Date: {{ project.end_date }}</p>
+            <button class="btn btn-success" style="margin-top: 10px;">Fund This Project</button>
+        </div>
+
+        <div class="reward-tiers">
+            <!-- Display reward tiers and benefits -->
+        </div>
+
+        <div class="comments-section">
+            <!-- Display comments section -->
+        </div>
+
+        <div class="help-center">
+            <a href="{{ url_for('support') }}" style="color: #3498db;">Help Center</a>
+        </div>
+    </section>
+
+    <aside class="user-profile" style="float: right; width: 30%; padding: 20px; border: 1px solid #ccc; background-color: #f9f9f9;">
+        <div class="profile-image">
+            <img src="{{ url_for('static', filename=project.profile_picture) }}" alt=" Profile" style="width: 100%; max-width: 150px;">
+        </div>
+        <div class="user-bio">
+            <p>{{ project.bio }}</p>
+        </div>
+        <div class="video-updates">
+            <!-- Display video updates if any -->
+        </div>
+        <div class="ask-question">
+            <button class="btn btn-info" style="width: 100%;">Ask a Question</button>
+        </div>
+    </aside>
+
+    <div style="clear: both;"></div> <!-- Clear the floats after the sections -->
+
+{% endblock %}
+
