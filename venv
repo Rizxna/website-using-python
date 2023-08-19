@@ -1,0 +1,2 @@
+folder---> venv\Scripts\activate (if mac/linux add source infront)
+  pip list
