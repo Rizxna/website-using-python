@@ -1,55 +1,129 @@
 from flask import Flask, request ,render_template, redirect, url_for, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField , BooleanField
+from wtforms.validators import DataRequired, Email , Length ,  EqualTo
+import os
+from datetime import datetime
 
 
 
 app = Flask(__name__)
 app.secret_key="hey its me Rizwana"
-    
 
+categories = ["Game", "Technical", "Story", "Books", "Real world", "Others"]
+
+projects = []
+
+
+ 
 @app.route("/livestreams")
-def about():
-    return render_template('video_updates.html')
+def livestreams():
+    return render_template('video_updates.html' , livestreams = True)
 
 
 @app.route("/analytics")
 def analytics():
-    return render_template("analytics.html")
+    return render_template("analytics.html",analytics=True)
 
-@app.route("/login")
+class LoginForm(FlaskForm):
+    email   = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=6,max=15)])
+    remember_me = BooleanField("Remember Me")
+    submit = SubmitField("Login")
+
+
+
+@app.route("/login", methods=['GET','POST'])
 def login():
-    return render_template("login.html")
+    form= LoginForm()
+    if form.validate_on_submit():
+        email=form.email.data
+        password=form.password.data
+    return render_template("login.html", form=form, login=True)
+
+class SignupForm(FlaskForm):
+    email   = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired(),Length(min=6,max=15)])
+    password_confirm = PasswordField("Confirm Password", validators=[DataRequired(),Length(min=6,max=15), EqualTo('password')])
+    first_name = StringField("First Name", validators=[DataRequired(),Length(min=2,max=55)])
+    last_name = StringField("Last Name", validators=[DataRequired(),Length(min=2,max=55)])
+    submit = SubmitField("Register Now")
 
 @app.route("/signup", methods=['GET'])
 def signup_form():
-    return render_template("signup.html")
+    form=SignupForm()
+    return render_template("signup.html", form=form, signup_form=True)
 
 @app.route("/signup", methods=['POST'])
 def signup_submit():
-    first_name= request.form['firstName']
-    last_name=request.form['lastName']
-    email= request.form['email']
-    password1=request.form['password1']
-    password2=request.form['password2']
-    
     return redirect(url_for('home'))
 
 
 @app.route("/support")
 def support():
-    return render_template("support.html")
+    return render_template("support.html",support=True)
 
-@app.route("/createproject")
-def createproject():
-    return render_template("project_create.html")
+@app.route("/about")
+def about():
+    return render_template("about.html", products=products)
+
+@app.route("/createproject", methods=['GET','POST'])
+def create_project():
+    if request.method == 'POST':
+        project = {
+            'title': request.form['title'],
+            'description': request.form['description'],
+            'funding_goal': float(request.form['funding_goal']),
+            'funding_tiers': [],
+            'category': request.form['category'],
+            'resources': request.form['resources'],
+            'stretch_goals': request.form['stretch_goals'],
+            'start_date': datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M'),
+            'end_date': datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M'),
+            'images': [],
+        }
+
+        for i in range(1, 5):
+            price = float(request.form[f'price_{i}'])
+            reward = request.form[f'reward_{i}']
+            image = request.files.get(f'image_{i}')
+
+            if price and reward and image:
+                project['funding_tiers'].append({
+                    'price': price,
+                    'reward': reward,
+                    'image': image.filename
+                })
+
+                image.save(os.path.join('static', 'images', image.filename))
+                project['images'].append(image.filename)
+
+        projects.append(project)
+        flash('Project created successfully', 'success')
+        return redirect('/')
+
+    return render_template('createproject.html', categories=categories )
+
+
+@app.route('/yourproject')
+def yourproject():
+    return render_template('displayprojects.html', projects=projects)
 
 @app.route("/allprojects")
 def allprojects():
-    return render_template("allprojects.html")
+    return render_template("allprojects.html", products=products)
 
+@app.route("/category")
+def category():
+    return render_template("category.html")
+
+@app.route("/products")
+def products():
+    return render_template("products.html")
 
 @app.route("/marketplace")
 def marketplace():
-    return render_template("marketplace.html")
+    return render_template("marketplace.html", products= products)
 
 @app.route("/search")
 def search():
@@ -74,7 +148,7 @@ def profile():
     }
     return render_template("profile.html", user=user)
 
-@app.route('/edit_profile', methods=['POST'])
+@app.route('/profileedit', methods=['POST'])
 def edit_profile():
     new_first_name = request.form['new_first_name']
     new_last_name = request.form['new_last_name']
@@ -92,7 +166,7 @@ def edit_profile():
 def home():
     print("Recommended Projects:", recommended_projects)
     print("Featured Projects:", featured_projects)
-    return render_template('home.html', recommended_projects=recommended_projects, featured_projects=featured_projects)
+    return render_template('home.html', recommended_projects=recommended_projects, featured_projects=featured_projects, home=True)
 
 
 
@@ -108,7 +182,7 @@ def project_details(project_id):
         'is_saved': False,
         'is_bookmarked': True
     }
-    return render_template('project_details.html', project=project)
+    return render_template('projectdetails.html', project=project)
 
 recommended_projects = [
     {
@@ -119,7 +193,6 @@ recommended_projects = [
     }
     # Add more recommended projects
 ]
-
 
 featured_projects = [
     {
@@ -143,7 +216,6 @@ featured_projects = [
     # Add more featured projects
 ]
 
-
 def update_like_count(project_id):
     print(f'Updates like count for project (project_id)')
 
@@ -157,7 +229,7 @@ def like_project(project_id):
 def bookmark_project(project_id):
     # Add the project to the user's bookmarks in your data store
     # Redirect back to the home page or project list
-    return redirect(url_for('home'))
+    return redirect(url_for('profile'))
 
 profile_data = {
     'email': 'usercreator@example.com',
@@ -170,6 +242,7 @@ profile_data = {
     'state': 'DUBAI',
     'country': 'UAE',
     'phone': '123-456-7890'
+    'bookmarked projects : Projects'
 }
 
 @app.route('/profileedit', methods=['GET', 'POST'])
@@ -194,3 +267,4 @@ def profileedit():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
