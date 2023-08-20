@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img src="static/images/intro.jpg" class="img-fluid" alt="image">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+              <a href="/category">
+                <span class="badge purple mr-1">{{ products.get_category_display }}</span>
+              </a>
+            </div>
+
+            <p class="lead">
+              {% if products.discount_price %}
+              <span class="mr-1">
+                <del>${{ products.price }}</del>
+              </span>
+              <span>${{ products.discount_price }}</span>
+              {% else %}
+              <span>${{ products.price }}</span>
+              {% endif %}
+            </p>
+
+            <p class="lead font-weight-bold">Description</p>
+
+            <p>{{ products.description }}</p>
+
+            <a href="{{ products.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+              Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+            <a href="{{ products.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+              Remove from cart
+            </a>
+
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Additional information</h4>
+
+          <p>At Quest to Empower, we believe that every idea has the potential to spark a meaningful change. Whether it's a groundbreaking technological innovation, a creative artistic endeavor, or a community-driven initiative, our platform provides the tools and resources needed to fund, develop, and showcase projects of all scales. With a diverse range of projects spanning various domains, users can explore, engage with, and contribute to initiatives that resonate with their interests and passions.</p>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4">
+
+          <img src="static/images/hsr3.jpg" class="img-fluid" alt="image">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="static/images/gi5.jpg" class="img-fluid" alt="image">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="static/images/book4.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+
+    <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text">
+
+          <h4 class="my-4 h4">QUEST TO EMPOWER </h4>
+          <p> Our platform goes beyond traditional crowdfunding by offering a holistic experience that includes features like personalized project recommendations, real-time project updates, interactive funding progress tracking, and seamless engagement between creators and supporters. Through gamification elements, AI-powered project matching, and cutting-edge technologies like AR and VR integration, Quest to Empower transforms the way projects are envisioned, funded, and realized.
+             Join us in the journey to empower dreams, foster innovation, and build a global community united by the pursuit of positive change. Whether you're a creator looking to turn your idea into reality or a supporter seeking meaningful projects to back, Quest to Empower invites you to be a part of a movement that celebrates innovation, collaboration, and impact.</p>
+          </div>
+        </div>
+            </main>
+
+{% endblock %}
